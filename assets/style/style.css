@@ -3,6 +3,8 @@
 
 /*_______________________________________________________________________________________________ Default Page Styling */
 * {
+    padding: 0;
+    margin: 0;
 	box-sizing: border-box;
 }
 
@@ -13,36 +15,6 @@ body {
 	margin: 0;
 }
 
-/*__________________________________________________________________________________ Gradient palette variables */
-:root {
-	/* Default/Home palette */
-	--grad-1: #ff996f7a;
-	--grad-1-clear: #ff996f00;
-	--grad-2: #468dbd80;
-	--grad-2-clear: #468dbd00;
-	--grad-3: #ffffff57;
-	--grad-3-clear: #ffffff00;
-}
-
-/* Teaching page palette */
-body.page-teaching {
-	--grad-1: #77DD767A;
-	--grad-1-clear: #77DD7600;
-	--grad-2: #A7D2E980;
-	--grad-2-clear: #A7D2E900;
-	--grad-3: #FCFFC64D;
-	--grad-3-clear: #FCFFC600;
-}
-
-/* Game Development page palette */
-body.page-gamedev {
-	--grad-1: #FFB8B873;
-	--grad-1-clear: #FFB8B800;
-	--grad-2: #9C81C675;
-	--grad-2-clear: #9C81C600;
-	--grad-3: #FF696247;
-	--grad-3-clear: #FF696200;
-}
 
 /*________________________________________________________________________________________________Overall Body Styles */
 body {
@@ -51,6 +23,13 @@ body {
 	overflow-x: hidden;
 	background: #e6eff4;
     font-family: 'Lato', sans-serif;
+    display: flex;
+	flex-direction: column;
+}
+
+/* Let main consume extra vertical space so footer can sit at page bottom. */
+main {
+	flex: 1 0 auto;
 }
 
 h1, h2, h3{
@@ -119,6 +98,57 @@ nav{
 
 .nav-toggle-label{
     font-size: 2rem;
+}
+
+/*_______________________________________________________________________________________________ Footer & Social Links*/
+footer {
+	margin-top: auto;
+	width: 100%;
+}
+
+#social-networks{
+    text-align: center;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-evenly;
+    list-style-type: none;
+}
+
+#social-networks i{
+    font-size: 160%;
+    padding: 5%;
+    color: #3a3a3a;
+}
+
+/*_________________________________________________________________________________________ Gradient palette variables */
+:root {
+	/* Default/Home palette */
+	--grad-1: #ff996f7a;
+	--grad-1-clear: #ff996f00;
+	--grad-2: #468dbd80;
+	--grad-2-clear: #468dbd00;
+	--grad-3: #ffffff57;
+	--grad-3-clear: #ffffff00;
+}
+
+/* Teaching page palette */
+body.page-teaching {
+	--grad-1: #77DD767A;
+	--grad-1-clear: #77DD7600;
+	--grad-2: #A7D2E980;
+	--grad-2-clear: #A7D2E900;
+	--grad-3: #FCFFC64D;
+	--grad-3-clear: #FCFFC600;
+}
+
+/* Game Development page palette */
+body.page-gamedev {
+	--grad-1: #FFB8B873;
+	--grad-1-clear: #FFB8B800;
+	--grad-2: #9C81C675;
+	--grad-2-clear: #9C81C600;
+	--grad-3: #FF696247;
+	--grad-3-clear: #FF696200;
 }
 
 /*
@@ -226,7 +256,7 @@ body::before {
 
     #logo{
         font-size: 175%;
-        line-height: 50px;
+        line-height: 75px;
         margin: 0 25px;
     }
 }
