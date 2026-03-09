@@ -1,0 +1,240 @@
+/*______________________________________________________________________________________________ Importing Google Fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Oswald:wght@200;300;400;500;600;700&display=swap');
+
+/*_______________________________________________________________________________________________ Default Page Styling */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	min-height: 100%;
+	margin: 0;
+}
+
+/*__________________________________________________________________________________ Gradient palette variables */
+:root {
+	/* Default/Home palette */
+	--grad-1: #ff996f7a;
+	--grad-1-clear: #ff996f00;
+	--grad-2: #468dbd80;
+	--grad-2-clear: #468dbd00;
+	--grad-3: #ffffff57;
+	--grad-3-clear: #ffffff00;
+}
+
+/* Teaching page palette */
+body.page-teaching {
+	--grad-1: #77DD767A;
+	--grad-1-clear: #77DD7600;
+	--grad-2: #A7D2E980;
+	--grad-2-clear: #A7D2E900;
+	--grad-3: #FCFFC64D;
+	--grad-3-clear: #FCFFC600;
+}
+
+/* Game Development page palette */
+body.page-gamedev {
+	--grad-1: #FFB8B873;
+	--grad-1-clear: #FFB8B800;
+	--grad-2: #9C81C675;
+	--grad-2-clear: #9C81C600;
+	--grad-3: #FF696247;
+	--grad-3-clear: #FF696200;
+}
+
+/*________________________________________________________________________________________________Overall Body Styles */
+body {
+	position: relative;
+	min-height: 100vh;
+	overflow-x: hidden;
+	background: #e6eff4;
+    font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3{
+    font-family: 'Oswald', sans-serif;
+    text-transform:  uppercase;
+    letter-spacing: 2px;
+    color: #252525;
+}
+
+/*____________________________________________________________________________________________________ Header & Nav Bar*/
+.hidden-heading{
+    display: none;
+}
+
+header{
+    background-color: #ffffff;
+    padding: 0 1rem;
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    box-shadow: 0 2px 2px #3a3a3a;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+header a{
+    text-decoration: none;
+    color: inherit;
+}
+
+#menu{
+    font-size: 110%;
+    letter-spacing: 4px;
+    list-style-type: none;
+}
+
+#menu > li{
+    margin-bottom:  1em;
+}
+
+.active{
+    border-bottom: 1px solid #3a3a3a;
+}
+
+/*Navbar styles with dropdown toggle*/
+nav{
+    position: absolute;
+    background-color: #ffffff;
+    width: 100%;
+    left: 0;
+    padding: 0 1rem;
+    box-shadow: 0 2px 2px #3a3a3a;
+    display: none;
+    top: 100%;
+}
+
+/*NavBar styles with dropdown toggle*/
+#nav-toggle:checked~nav{
+    display: block;
+}
+
+#nav-toggle{
+    display: none;
+}
+
+.nav-toggle-label{
+    font-size: 2rem;
+}
+
+/*
+	__________________________________________________________________________________________ Animated Radial Background
+	A fixed pseudo-element sits behind page content and carries the gradients.
+*/
+body::before {
+	content: "";
+	/* Fixed keeps the animation anchored to the viewport while scrolling. */
+	position: fixed;
+	/* Oversized inset gives room for movement without exposing hard edges. */
+	inset: -30vmax;
+	/* Places this layer behind normal document content. */
+	z-index: -1;
+	/* Three radial gradients blend to form soft color fields. */
+	background:
+		radial-gradient(
+			48% 62% at 24% 28%,
+			var(--grad-1) 0%,
+			var(--grad-1-clear) 72%
+		),
+		radial-gradient(
+			58% 54% at 76% 66%,
+			var(--grad-2) 0%,
+			var(--grad-2-clear) 74%
+		),
+		radial-gradient(
+			44% 56% at 54% 42%,
+			var(--grad-3) 0%,
+			var(--grad-3-clear) 70%
+		);
+	/* Blur + slight saturation boost make the gradients feel atmospheric. */
+	filter: blur(20px) saturate(108%);
+	/* Transforms rotate/scale around center for natural motion. */
+	transform-origin: center;
+	/* Slow alternating animation creates a continuous, gentle loop. */
+	animation: driftMorph 5s ease-in-out infinite alternate;
+	/* Hint to browser for smoother animation performance. */
+	will-change: transform, border-radius;
+}
+
+/*
+	______________________________________________________________________________________________ Animation timeline
+	- `transform` drifts, rotates, and scales the whole gradient layer.
+	- `border-radius` changes morph the pseudo-element silhouette.
+*/
+@keyframes driftMorph {
+	0% {
+		transform: translate3d(-6%, -4%, 0) rotate(0deg) scale(1);
+		border-radius: 46% 54% 52% 48% / 42% 50% 50% 58%;
+	}
+	30% {
+		transform: translate3d(4%, -6%, 0) rotate(7deg) scale(1.04);
+		border-radius: 60% 40% 49% 51% / 55% 42% 58% 45%;
+	}
+	62% {
+		transform: translate3d(7%, 5%, 0) rotate(-5deg) scale(0.98);
+		border-radius: 38% 62% 57% 43% / 48% 60% 40% 52%;
+	}
+	100% {
+		transform: translate3d(-4%, 7%, 0) rotate(3deg) scale(1.03);
+		border-radius: 56% 44% 41% 59% / 62% 44% 56% 38%;
+	}
+}
+
+/* Mobile tuning: larger overscan + slightly softer/longer animation. */
+@media (max-width: 768px) {
+	body::before {
+		inset: -38vmax;
+		filter: blur(16px) saturate(106%);
+		animation-duration: 42s;
+	}
+}
+
+/* Accessibility: disable motion for users who prefer reduced animation. */
+@media (prefers-reduced-motion: reduce) {
+	body::before {
+		animation: none;
+	}
+}
+
+/*____________________________________________________________________________________ Media Queries : Reactive Styling*/
+/* Media Query: Tablet & Larger (768 and up)*/
+@media screen and (min-width: 768px) {
+    /*Header*/
+    nav{
+        display: block;
+        position: relative;
+        box-shadow: none;
+        width: fit-content;
+        padding-right: 1rem;
+    }
+
+    #menu{
+        display: flex;
+    }
+
+    #menu>li{
+        padding-left: 1rem;
+    }
+
+    .nav-toggle-label{
+        display: none;
+    }
+
+    #logo{
+        font-size: 175%;
+        line-height: 50px;
+        margin: 0 25px;
+    }
+}
+
+/* Media Query: Small Laptop & Larger (991 and up)*/
+@media screen and (min-width: 991px){
+    #menu a:hover{
+        border-bottom: 1px solid #3a3a3a;
+    }
+}
+
