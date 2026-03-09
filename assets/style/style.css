@@ -45,7 +45,7 @@ h1, h2, h3{
 }
 
 header{
-    background-color: #ffffff;
+    background-color: #ffffff80;
     padding: 0 1rem;
     position: fixed;
     z-index: 99;
@@ -78,10 +78,11 @@ header a{
 /*Navbar styles with dropdown toggle*/
 nav{
     position: absolute;
-    background-color: #ffffff;
+	background-color: #ffffff80;
     width: 100%;
     left: 0;
     padding: 0 1rem;
+    padding-top: 16px;
     box-shadow: 0 2px 2px #3a3a3a;
     display: none;
     top: 100%;
@@ -239,7 +240,9 @@ body::before {
         position: relative;
         box-shadow: none;
         width: fit-content;
+		padding-top: 0;
         padding-right: 1rem;
+		background-color: transparent;
     }
 
     #menu{
