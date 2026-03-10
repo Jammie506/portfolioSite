@@ -30,6 +30,7 @@ body {
 /* Let main consume extra vertical space so footer can sit at page bottom. */
 main {
 	flex: 1 0 auto;
+	padding: 7.5rem 1rem 2.5rem;
 }
 
 h1, h2, h3{
@@ -45,12 +46,14 @@ h1, h2, h3{
 }
 
 header{
-    background-color: #ffffff80;
+	background-color: #ffffff80;
     padding: 0 1rem;
     position: fixed;
     z-index: 99;
     width: 100%;
     box-shadow: 0 2px 2px #3a3a3a;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -84,8 +87,18 @@ nav{
     padding: 0 1rem;
     padding-top: 16px;
     box-shadow: 0 2px 2px #3a3a3a;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
     display: none;
     top: 100%;
+}
+
+/* Fallback for browsers without backdrop blur support. */
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+	header,
+	nav {
+		background-color: #ffffff80;
+	}
 }
 
 /*NavBar styles with dropdown toggle*/
@@ -100,6 +113,115 @@ nav{
 .nav-toggle-label{
     font-size: 2rem;
 }
+
+/*___________________________________________________________________________________________________ Main Body Styling*/
+
+/*____________________________________________________________________________ Hero Section : Index*/
+.intro-hero {
+	position: relative;
+	max-width: 900px;
+	margin: 0 auto;
+	padding-bottom: 6.5rem;
+}
+
+.intro-hero-media {
+	margin: 0;
+}
+
+.intro-hero-image {
+	display: block;
+	width: 100%;
+	max-height: 520px;
+	object-fit: cover;
+	border-radius: 1.25rem;
+	box-shadow: 0 14px 32px #25252540;
+}
+
+.intro-hero-card {
+	position: absolute;
+	right: -5rem;
+	bottom: 2rem;
+	max-width: 340px;
+	padding: 1.1rem 1.25rem;
+	border-radius: 0.85rem;
+	background-color: #ffffffeb;
+	box-shadow: 0 12px 28px #25252533;
+}
+
+.intro-hero-card h2 {
+	margin-bottom: 0.4rem;
+}
+
+.intro-hero-card p {
+	line-height: 1.45;
+}
+
+.intro-about-me {
+	position: relative;
+	width: 100%;
+	max-width: 38rem;
+	padding: 1.1rem 1.25rem;
+	margin: 0 auto;
+	border-radius: 0.85rem;
+	background-color: #ffffffeb;
+	box-shadow: 0 12px 28px #25252533;
+}
+
+.intro-about-wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.intro-about-me ul {
+	list-style: none;
+}
+
+.intro-about-me ul:not(.cta-links) li + li {
+	margin-top: 2rem;
+}
+
+.intro-about-me li p{
+    padding-top: 10px;
+}
+
+.cta-links{
+    text-align: center;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-evenly;
+	align-items: flex-start;
+	gap: 1.25rem;
+	flex-wrap: wrap;
+    list-style-type: none;
+}
+
+.cta-links li {
+	margin: 0;
+}
+
+.cta-links a {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.35rem;
+	text-decoration: none;
+	color: #3a3a3a;
+	min-width: 5.25rem;
+}
+
+.cta-links i{
+    font-size: 160%;
+	padding: 0;
+    color: #3a3a3a;
+}
+
+.cta-links span {
+	font-size: 0.85rem;
+	line-height: 1.2;
+	letter-spacing: 0.02em;
+}
+
 
 /*_______________________________________________________________________________________________ Footer & Social Links*/
 footer {
@@ -242,7 +364,9 @@ body::before {
         width: fit-content;
 		padding-top: 0;
         padding-right: 1rem;
-		background-color: transparent;
+		background-color: inherit;
+		-webkit-backdrop-filter: none;
+		backdrop-filter: none;
     }
 
     #menu{
@@ -264,8 +388,116 @@ body::before {
     }
 }
 
+@media (max-width: 767px) {
+	main {
+		padding-top: 6.75rem;
+	}
+
+	.intro-hero {
+		padding-bottom: 0;
+	}
+
+	.intro-hero-card {
+		position: relative;
+		right: auto;
+		bottom: auto;
+		max-width: none;
+		margin: -1.25rem 0 0 auto;
+	}
+
+	.intro-about-wrap {
+		margin-top: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.intro-about-me {
+		max-width: min(92vw, 34rem);
+		margin: 0 auto;
+	}
+}
+
+/* Small landscape tuning: reduce card compression and keep comfortable text width. */
+@media screen and (max-width: 900px) and (orientation: landscape) {
+	.intro-about-wrap {
+		gap: 1rem;
+	}
+
+	.intro-about-me {
+		width: min(94vw, 40rem);
+		max-width: 40rem;
+		padding: 0.95rem 1.05rem;
+	}
+
+	.intro-about-me ul:not(.cta-links) li + li {
+		margin-top: 1.25rem;
+	}
+
+	.intro-about-me li p {
+		padding-top: 0.4rem;
+	}
+}
+
+/* Mobile landscape: keep hero card inside the image/frame instead of off-canvas. */
+@media screen and (min-width: 768px) and (max-width: 990px) and (orientation: landscape) and (max-height: 560px) {
+	.intro-hero {
+		padding-bottom: 4.5rem;
+	}
+
+	.intro-hero-card {
+		right: 0.75rem;
+		bottom: 0.75rem;
+		max-width: min(70vw, 18rem);
+		padding: 0.8rem 0.95rem;
+	}
+
+	.intro-hero-card h2 {
+		font-size: 1.1rem;
+	}
+
+	.intro-hero-card p {
+		font-size: 0.9rem;
+		line-height: 1.35;
+	}
+
+	.intro-about-me {
+		width: min(92vw, 34rem);
+		max-width: 34rem;
+	}
+}
+
 /* Media Query: Small Laptop & Larger (991 and up)*/
 @media screen and (min-width: 991px){
+	main {
+		display: flex;
+		align-items: flex-start;
+		gap: clamp(1.5rem, 4vw, 3.5rem);
+	}
+
+	.intro-hero {
+		width: 33%;
+		min-width: 320px;
+		max-width: 420px;
+		margin: 0;
+	}
+
+	.intro-about-wrap {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 1.5rem;
+        padding-right: 1.5rem;
+	}
+
+	.intro-about-me {
+		width: min(100%, 42rem);
+		max-width: 42rem;
+		margin: 0 0 0 auto;
+	}
+
     #menu a:hover{
         border-bottom: 1px solid #3a3a3a;
     }
