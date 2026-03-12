@@ -1,4 +1,111 @@
 (() => {
+	const root = document.documentElement;
+	const themeToggle = document.getElementById('theme-toggle');
+	const storageKey = 'preferred-theme';
+	const cookieKey = 'preferred-theme';
+	const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+	const windowNamePrefix = 'theme=';
+
+	function readCookieTheme() {
+		const cookieString = document.cookie || '';
+		const cookies = cookieString.split(';').map((entry) => entry.trim());
+		const match = cookies.find((entry) => entry.startsWith(`${cookieKey}=`));
+
+		if (!match) {
+			return null;
+		}
+
+		const value = decodeURIComponent(match.split('=').slice(1).join('='));
+		return value === 'light' || value === 'dark' ? value : null;
+	}
+
+	function writeCookieTheme(theme) {
+		document.cookie = `${cookieKey}=${encodeURIComponent(theme)}; path=/; max-age=31536000; SameSite=Lax`;
+	}
+
+	function isDarkPreferred() {
+		return mediaQuery.matches;
+	}
+
+	function syncToggle(theme) {
+		if (!themeToggle) {
+			return;
+		}
+		themeToggle.checked = theme === 'dark';
+	}
+
+	function applyTheme(theme) {
+		if (theme === 'light' || theme === 'dark') {
+			root.setAttribute('data-theme', theme);
+			syncToggle(theme);
+			return;
+		}
+
+		root.removeAttribute('data-theme');
+		syncToggle(isDarkPreferred() ? 'dark' : 'light');
+	}
+
+	function readWindowNameTheme() {
+		if (typeof window.name !== 'string' || !window.name.startsWith(windowNamePrefix)) {
+			return null;
+		}
+
+		const stored = window.name.slice(windowNamePrefix.length);
+		return stored === 'light' || stored === 'dark' ? stored : null;
+	}
+
+	function writeWindowNameTheme(theme) {
+		window.name = `${windowNamePrefix}${theme}`;
+	}
+
+	function getStoredTheme() {
+		const cookieTheme = readCookieTheme();
+		if (cookieTheme) {
+			return cookieTheme;
+		}
+
+		try {
+			const stored = localStorage.getItem(storageKey);
+			if (stored === 'light' || stored === 'dark') {
+				return stored;
+			}
+		} catch (error) {
+			// Some contexts (privacy mode/file origin) can block web storage.
+		}
+
+		return readWindowNameTheme();
+	}
+
+	function storeTheme(theme) {
+		writeCookieTheme(theme);
+
+		try {
+			localStorage.setItem(storageKey, theme);
+		} catch (error) {
+			// Fallback in contexts where localStorage is unavailable.
+		}
+
+		writeWindowNameTheme(theme);
+	}
+
+	applyTheme(getStoredTheme());
+
+	if (themeToggle) {
+		themeToggle.addEventListener('change', () => {
+			const selectedTheme = themeToggle.checked ? 'dark' : 'light';
+			storeTheme(selectedTheme);
+			applyTheme(selectedTheme);
+		});
+	}
+
+	mediaQuery.addEventListener('change', () => {
+		if (!getStoredTheme()) {
+			applyTheme(null);
+		}
+	});
+})();
+
+(() => {
 	const panels = Array.from(document.querySelectorAll('.filter-panel[data-filter]'));
 	const posts = Array.from(document.querySelectorAll('.material-card[data-tags]'));
 	const status = document.getElementById('teaching-filter-status');
