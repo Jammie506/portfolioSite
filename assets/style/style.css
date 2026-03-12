@@ -382,7 +382,7 @@ body.page-teaching main p {
 	font-weight: 700;
 	letter-spacing: 0.04em;
 	text-transform: uppercase;
-	color: #2f4d5f;
+	color: var(--muted-text);
 	margin-bottom: 0.2rem;
 	text-indent: 0;
 }
@@ -397,6 +397,99 @@ body.page-teaching main p {
 .teaching-longform-intro {
 	margin-top: 0.45rem;
 	line-height: 1.45;
+}
+
+/*________________________________________________________________________ Programming Page Components */
+.programming-shell {
+	--cat-curriculum: #d8ecff;
+	--cat-inclusive: #dff6e6;
+	--cat-digital: #f0e2ff;
+	max-width: 1100px;
+	margin: 0 auto;
+	display: grid;
+	gap: 1.35rem;
+}
+
+.programming-intro-panel {
+	background-color: var(--surface-strong);
+	border-radius: 0.9rem;
+	padding: 1.1rem 1.25rem;
+	box-shadow: 0 12px 28px var(--shadow-color);
+}
+
+.programming-intro-panel p {
+	line-height: 1.45;
+}
+
+.programming-project-list {
+	display: grid;
+	gap: 1rem;
+}
+
+.programming-project-card {
+	display: flex;
+	align-items: stretch;
+	gap: 1rem;
+	width: 100%;
+}
+
+.programming-project-card[hidden] {
+	display: none;
+}
+
+.project-thumb {
+	width: 220px;
+	min-width: 220px;
+	height: 150px;
+	object-fit: cover;
+	border-radius: 0.65rem;
+	border: 1px solid #3a3a3a1f;
+}
+
+.project-copy {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 0.55rem;
+	min-width: 0;
+}
+
+.project-copy p {
+	line-height: 1.45;
+}
+
+.project-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.55rem;
+	align-items: center;
+}
+
+.project-link {
+	align-self: flex-start;
+	text-decoration: none;
+	padding: 0.45rem 0.7rem;
+	border-radius: 0.55rem;
+	background-color: #dcebf5;
+	color: #1f4056;
+	font-size: 0.9rem;
+	font-weight: 700;
+}
+
+.project-link:hover {
+	background-color: #c8dfef;
+}
+
+.programming-shell .filter-panel[data-filter="education"] h3 {
+	border-bottom-color: var(--cat-curriculum);
+}
+
+.programming-shell .filter-panel[data-filter="automation"] h3 {
+	border-bottom-color: var(--cat-inclusive);
+}
+
+.programming-shell .filter-panel[data-filter="games"] h3 {
+	border-bottom-color: var(--cat-digital);
 }
 
 .material-grid {
@@ -467,6 +560,21 @@ body.page-teaching main p {
 .tag-digital {
 	background-color: var(--cat-digital);
 	color: var(--cat-digital-text);
+}
+
+html[data-theme="dark"] .tag-curriculum {
+	background-color: #2a4b65;
+	color: #dcecff;
+}
+
+html[data-theme="dark"] .tag-inclusive {
+	background-color: #24503c;
+	color: #d8f5e7;
+}
+
+html[data-theme="dark"] .tag-digital {
+	background-color: #43305e;
+	color: #eadcff;
 }
 
 .material-links {
@@ -693,6 +801,15 @@ html[data-theme="dark"] .download-link:hover {
 	background-color: #315574;
 }
 
+html[data-theme="dark"] .project-link {
+	background-color: #27455e;
+	color: #eaf3fb;
+}
+
+html[data-theme="dark"] .project-link:hover {
+	background-color: #315574;
+}
+
 html[data-theme="dark"] .filter-panel.is-active {
 	background-color: #1d3a52;
 	box-shadow: 0 12px 24px #00000066;
@@ -731,6 +848,30 @@ html[data-theme="dark"] .filter-panel.is-active {
 	}
 
 	html:not([data-theme="light"]) .download-link:hover {
+		background-color: #315574;
+	}
+
+	html:not([data-theme="light"]) .tag-curriculum {
+		background-color: #2a4b65;
+		color: #dcecff;
+	}
+
+	html:not([data-theme="light"]) .tag-inclusive {
+		background-color: #24503c;
+		color: #d8f5e7;
+	}
+
+	html:not([data-theme="light"]) .tag-digital {
+		background-color: #43305e;
+		color: #eadcff;
+	}
+
+	html:not([data-theme="light"]) .project-link {
+		background-color: #27455e;
+		color: #eaf3fb;
+	}
+
+	html:not([data-theme="light"]) .project-link:hover {
 		background-color: #315574;
 	}
 
@@ -909,6 +1050,16 @@ body::before {
 
 	.theme-toggle-text {
 		font-size: 0.72rem;
+	}
+
+	.programming-project-card {
+		flex-direction: column;
+	}
+
+	.project-thumb {
+		width: 100%;
+		min-width: 0;
+		height: 180px;
 	}
 }
 

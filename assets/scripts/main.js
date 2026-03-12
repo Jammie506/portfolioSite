@@ -151,7 +151,9 @@
 (() => {
 	const panels = Array.from(document.querySelectorAll('.filter-panel[data-filter]'));
 	const posts = Array.from(document.querySelectorAll('.material-card[data-tags]'));
-	const status = document.getElementById('teaching-filter-status');
+	const status = document.getElementById('teaching-filter-status') || document.getElementById('programming-filter-status');
+	const defaultStatusText = status?.dataset.defaultText || 'Showing all posts. Select a panel above to filter.';
+	const itemLabel = (status?.dataset.itemLabel || 'post').toLowerCase();
 	const timelineSection = document.querySelector('.teaching-timeline');
 
 	if (!panels.length || !posts.length) {
@@ -166,12 +168,12 @@
 		}
 
 		if (!activeFilter) {
-			status.textContent = 'Showing all posts. Select a panel above to filter.';
+			status.textContent = defaultStatusText;
 			return;
 		}
 
 		const activeLabel = panels.find((panel) => panel.dataset.filter === activeFilter)?.querySelector('h3')?.textContent?.trim() || activeFilter;
-		status.textContent = `Showing ${matchCount} post${matchCount === 1 ? '' : 's'} for ${activeLabel}. Click the same panel again to reset.`;
+		status.textContent = `Showing ${matchCount} ${itemLabel}${matchCount === 1 ? '' : 's'} for ${activeLabel}. Click the same panel again to reset.`;
 	}
 
 	function applyFilter() {
