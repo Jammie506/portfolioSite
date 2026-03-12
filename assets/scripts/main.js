@@ -103,6 +103,49 @@
 			applyTheme(null);
 		}
 	});
+
+	const mobileToggleQuery = window.matchMedia('(max-width: 767px)');
+	let lastScrollY = window.scrollY;
+	let isTicking = false;
+
+	function setToggleVisibilityOnMobile(isHidden) {
+		document.body.classList.toggle('theme-toggle-hidden', isHidden);
+	}
+
+	function updateToggleFromScroll() {
+		if (!mobileToggleQuery.matches) {
+			setToggleVisibilityOnMobile(false);
+			lastScrollY = window.scrollY;
+			isTicking = false;
+			return;
+		}
+
+		const currentY = window.scrollY;
+
+		if (currentY <= 24) {
+			setToggleVisibilityOnMobile(false);
+		} else if (currentY > lastScrollY + 6) {
+			setToggleVisibilityOnMobile(true);
+		} else if (currentY < lastScrollY - 6) {
+			setToggleVisibilityOnMobile(false);
+		}
+
+		lastScrollY = currentY;
+		isTicking = false;
+	}
+
+	function handleScroll() {
+		if (isTicking) {
+			return;
+		}
+
+		isTicking = true;
+		window.requestAnimationFrame(updateToggleFromScroll);
+	}
+
+	window.addEventListener('scroll', handleScroll, { passive: true });
+	mobileToggleQuery.addEventListener('change', updateToggleFromScroll);
+	updateToggleFromScroll();
 })();
 
 (() => {
