@@ -446,6 +446,12 @@ body.page-teaching main p {
 	border: 1px solid #3a3a3a1f;
 }
 
+.project-thumb-contain {
+	object-fit: contain;
+	object-position: center;
+	background-color: #ffffff;
+}
+
 .project-copy {
 	display: flex;
 	flex-direction: column;
